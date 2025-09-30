@@ -3,6 +3,7 @@ CREATE TABLE users (
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
+    wallet_balance DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -32,7 +33,6 @@ CREATE TABLE holdings (
     user_id INT,
     stock_id INT,
     quantity INT NOT NULL,
-    avg_price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (stock_id) REFERENCES stocks(stock_id),
     UNIQUE(user_id, stock_id) -- one record per stock per user
