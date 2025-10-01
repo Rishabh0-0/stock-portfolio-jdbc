@@ -6,31 +6,26 @@ import java.sql.DriverManager;
 import java.util.Properties;
 
 public class DbUtil {
-    private static Connection conn = null;
+    private static Connection conn;
 
     public static Connection getConnection() {
         if (conn != null) return conn;
 
-        try {
-            Properties props = new Properties();
-            InputStream input = DbUtil.class.getClassLoader().getResourceAsStream("db.properties");
-
-            if (input == null) {
-                throw new RuntimeException("db.properties not found in resources folder");
-            }
-
+        Properties props = new Properties();
+        try (InputStream input = DbUtil.class.getClassLoader().getResourceAsStream("db.properties")) {
             props.load(input);
 
-            String url = props.getProperty("url");
-            String username = props.getProperty("username");
-            String password = props.getProperty("password");
-            String driver = props.getProperty("driver");
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String password = props.getProperty("db.password");
+            String driver = props.getProperty("db.driver");
 
             Class.forName(driver);
 
             conn = DriverManager.getConnection(url, username, password);
 
         } catch (Exception e) {
+            System.out.println("Error connecting to DB");
             e.printStackTrace();
         }
 
