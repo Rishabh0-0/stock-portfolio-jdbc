@@ -109,6 +109,41 @@ public class UserDAO {
         return users;
     }
 
+    public boolean updateUser(User user) {
+        String sql = "UPDATE Users SET username = ?, email = ?, password = ?, wallet_balance = ? WHERE user_id = ?";
+
+        try (
+                Connection conn = DbUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.setDouble(4, user.getWallet_balance());
+            stmt.setInt(5, user.getUser_id());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Error message: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteUser(int id) {
+        String sql = "DELETE FROM Users WHERE user_id = ?";
+
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setInt(1, id);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Error message: " + e.getMessage());
+            return false;
+        }
+    }
+
     private User getUser(ResultSet rs) throws SQLException {
         int userId = rs.getInt("user_id");
         String username = rs.getString("username");
