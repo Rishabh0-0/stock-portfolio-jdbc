@@ -4,6 +4,8 @@ import com.portfolio.model.User;
 import com.portfolio.util.DbUtil;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class UserDAO {
     public int addUser(User user){
@@ -42,9 +44,8 @@ public class UserDAO {
         return generatedId;
     }
 
-    public User getUserById(int id){
+    public Optional<User> getUserById(int id){
         String sql = "SELECT * FROM users WHERE user_id = ?";
-        User user = new User();
 
         try (
                 Connection conn = DbUtil.getConnection();
@@ -54,11 +55,15 @@ public class UserDAO {
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    user.setUser_id(rs.getInt("user_id"));
-                    user.setUsername(rs.getString("username"));
-                    user.setEmail(rs.getString("email"));
-                    user.setPassword(rs.getString("password"));
-                    user.setCreated_at(rs.getTimestamp("created_at").toLocalDateTime());
+                    int userId = rs.getInt("user_id");
+                    String username = rs.getString("username");
+                    String email = rs.getString("email");
+                    String password = rs.getString("password");
+                    double walletBalance = rs.getDouble("wallet_balance");
+                    LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+
+                    User user = new User(userId, username, email, password, walletBalance, createdAt);
+                    return Optional.of(user);
                 }
             }
 
@@ -66,6 +71,38 @@ public class UserDAO {
             System.out.println("Error message: " + e.getMessage());
         }
 
-        return user;
+        return Optional.empty();
     }
+
+    public Optional<User> getUserByEmail(String email){
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        try (
+                Connection conn = DbUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ){
+            ps.setString(1, email);
+
+            try (ResultSet rs = ps.executeQuery()){
+                if (rs.next()){
+                    int userId = rs.getInt("user_id");
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+                    double walletBalance = rs.getDouble("wallet_balance");
+                    LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+
+                    User user = new User(userId, username, email, password, walletBalance, createdAt);
+                    return Optional.of(user);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error message: " + e.getMessage());
+        }
+
+        return Optional.empty();
+    }
+
+
+
 }

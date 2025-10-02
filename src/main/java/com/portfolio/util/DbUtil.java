@@ -6,13 +6,10 @@ import java.sql.DriverManager;
 import java.util.Properties;
 
 public class DbUtil {
-    private static Connection conn;
-
     public static Connection getConnection() {
-        if (conn != null) return conn;
-
         Properties props = new Properties();
         try (InputStream input = DbUtil.class.getClassLoader().getResourceAsStream("db.properties")) {
+            if (input == null) throw new RuntimeException("db.properties not found in classpath");
             props.load(input);
 
             String url = props.getProperty("db.url");
@@ -21,14 +18,10 @@ public class DbUtil {
             String driver = props.getProperty("db.driver");
 
             Class.forName(driver);
-
-            conn = DriverManager.getConnection(url, username, password);
+            return DriverManager.getConnection(url, username, password);
 
         } catch (Exception e) {
-            System.out.println("Error connecting to DB");
-            e.printStackTrace();
+            throw new RuntimeException("Error connecting to DB", e);
         }
-
-        return conn;
     }
 }
