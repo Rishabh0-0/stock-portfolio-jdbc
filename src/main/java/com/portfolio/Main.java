@@ -1,6 +1,8 @@
 package com.portfolio;
 
+import com.portfolio.dao.StockDAO;
 import com.portfolio.dao.UserDAO;
+import com.portfolio.model.Stock;
 import com.portfolio.model.User;
 
 import java.time.LocalDateTime;
@@ -17,11 +19,16 @@ public class Main {
 //
 //        System.out.println(userDao.deleteUser(10) ? "userDeleted" : "userNotFound");
 
-        User user = userDao.getUserById(11).get();
-        user.setUsername("pogoli");
-        userDao.updateUser(user);
+//        User user = userDao.getUserById(11).get();
+//        user.setUsername("pogoli");
+//        userDao.updateUser(user);
 
 
-        userDao.fetchAllUsers().forEach(System.out::println);
+//        StockDAO stockDao = new StockDAO();
+//
+//        stockDao.addStock(new Stock("BEL", "Bharat Electronics", 500.26));
+//        stockDao.getAllStocks().forEach(System.out::println);
+
+//        userDao.fetchAllUsers().forEach(System.out::println);
     }
 }
