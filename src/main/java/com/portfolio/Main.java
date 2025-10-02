@@ -10,7 +10,9 @@ public class Main {
         UserDAO userDao = new UserDAO();
 
 //        userDao.addUser(new User("rishabhraj", "abc@123gmail.com", "abc123", 0, LocalDateTime.now()));
-        userDao.getUserById(8).ifPresent(System.out::println);
+        userDao.getUserById(9).ifPresent(System.out::println);
         userDao.getUserByEmail("abc@123gmail.com").ifPresent(System.out::println);
+
+        userDao.fetchAllUsers().forEach(System.out::println);
     }
 }

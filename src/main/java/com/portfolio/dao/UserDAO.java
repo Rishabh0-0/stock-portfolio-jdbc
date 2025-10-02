@@ -5,6 +5,8 @@ import com.portfolio.util.DbUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDAO {
@@ -33,7 +35,6 @@ public class UserDAO {
                     }
                 }
             }
-            System.out.println("User created successfully!");
 
         } catch (Exception e) {
             System.out.println("Error message: " + e.getMessage());
@@ -55,15 +56,7 @@ public class UserDAO {
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    int userId = rs.getInt("user_id");
-                    String username = rs.getString("username");
-                    String email = rs.getString("email");
-                    String password = rs.getString("password");
-                    double walletBalance = rs.getDouble("wallet_balance");
-                    LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
-
-                    User user = new User(userId, username, email, password, walletBalance, createdAt);
-                    return Optional.of(user);
+                    return Optional.of(getUser(rs));
                 }
             }
 
@@ -85,14 +78,7 @@ public class UserDAO {
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    int userId = rs.getInt("user_id");
-                    String username = rs.getString("username");
-                    String password = rs.getString("password");
-                    double walletBalance = rs.getDouble("wallet_balance");
-                    LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
-
-                    User user = new User(userId, username, email, password, walletBalance, createdAt);
-                    return Optional.of(user);
+                    return Optional.of(getUser(rs));
                 }
             }
 
@@ -103,6 +89,35 @@ public class UserDAO {
         return Optional.empty();
     }
 
+    public List<User> fetchAllUsers() {
+        List<User> users = new ArrayList<>();
 
+        String sql = "SELECT * FROM users";
+
+        try (
+                Connection conn = DbUtil.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+        ) {
+            while (rs.next()){
+                users.add(getUser(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error message: " + e.getMessage());
+        }
+
+        return users;
+    }
+
+    private User getUser(ResultSet rs) throws SQLException {
+        int userId = rs.getInt("user_id");
+        String username = rs.getString("username");
+        String email = rs.getString("email");
+        String password = rs.getString("password");
+        double walletBalance = rs.getDouble("wallet_balance");
+        LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+
+        return new User(userId, username, email, password, walletBalance, createdAt);
+    }
 
 }
