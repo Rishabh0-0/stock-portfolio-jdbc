@@ -66,6 +66,8 @@ public class HoldingDAO {
             return false;
         }
 
+        // could use ON DUPLICATE KEY UPDATE in mysql also
+
     }
 
 
