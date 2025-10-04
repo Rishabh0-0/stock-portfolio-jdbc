@@ -1,5 +1,6 @@
 package com.portfolio;
 
+import com.portfolio.dao.HoldingDAO;
 import com.portfolio.dao.StockDAO;
 import com.portfolio.dao.UserDAO;
 import com.portfolio.model.Stock;
@@ -30,5 +31,20 @@ public class Main {
 //        stockDao.getAllStocks().forEach(System.out::println);
 
 //        userDao.fetchAllUsers().forEach(System.out::println);
+
+        HoldingDAO holdingDao = new HoldingDAO();
+
+//        System.out.println(holdingDao.addOrUpdateHolding(1, 2, 20));
+
+        System.out.println(holdingDao.deleteHolding(1, 2));
+
+        holdingDao.getHoldingsByUser(1).forEach(h -> {
+            System.out.println("Holding ID: " + h.getHolding_id());
+            System.out.println("User ID: " + h.getUser_id());
+            System.out.println("Stock ID: " + h.getStock_id());
+            System.out.println("Quantity: " + h.getQuantity());
+            System.out.println();
+        });
+
     }
 }
