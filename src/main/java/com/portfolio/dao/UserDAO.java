@@ -2,6 +2,7 @@ package com.portfolio.dao;
 
 import com.portfolio.model.User;
 import com.portfolio.util.DbUtil;
+import com.portfolio.util.PasswordUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -10,39 +11,32 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDAO {
-    public static int addUser(User user){
+    public static boolean addUser(User user){
         String addUserSql = "INSERT INTO users (username, email, password, wallet_balance, created_at)" +
                 "VALUES (?, ?, ?, ?, ?)";
-        int generatedId = -1;
 
         try (
                 Connection conn = DbUtil.getConnection();
-                PreparedStatement ps = conn.prepareStatement(addUserSql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = conn.prepareStatement(addUserSql);
 
         ) {
+            String hashedPassword = PasswordUtil.hashPassword(user.getPassword());
+
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
+            ps.setString(3, hashedPassword);
             ps.setDouble(4, user.getWallet_balance());
             ps.setTimestamp(5, Timestamp.valueOf(user.getCreated_at()));
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
-                try (ResultSet rs = ps.getGeneratedKeys()){
-                    if (rs.next()){
-                        generatedId = rs.getInt(1);
-                        System.out.println("User created successfully with ID: " + generatedId);
-                    }
-                }
+                return true;
             }
 
         } catch (Exception e) {
             System.out.println("Error message: " + e.getMessage());
-            e.printStackTrace();
         }
-
-
-        return generatedId;
+        return false;
     }
 
     public static User getUserById(int id){

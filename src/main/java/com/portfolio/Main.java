@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
-        UserService.registerUser(new User("raj", "abc@123", "123"));
-
+//        UserService.registerUser(new User("raj", "abc@123", "123"));
+        System.out.println(UserService.login("abc@123", "123"));
 
     }
 }
