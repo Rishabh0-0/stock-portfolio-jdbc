@@ -6,10 +6,15 @@ import com.portfolio.model.Stock;
 import java.util.List;
 
 public class StockService {
-    public static void listALlStocks() {
+    public static void listAllStocks() {
         List<Stock> allStocks = StockDAO.getAllStocks();
 
-        allStocks.forEach(System.out::println);
+        System.out.printf("%-10s %-25s %-15s%n", "SYMBOL", "COMPANY NAME", "PRICE");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        for (Stock stock: allStocks) {
+            System.out.printf("%-10s %-25s %-15.2f%n", stock.getSymbol(), stock.getCompany_name(), stock.getCurrentPrice());
+        }
+
     }
 
     public static void addNewStock(Stock stock) {
