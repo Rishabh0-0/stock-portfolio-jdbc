@@ -45,7 +45,7 @@ public class UserService {
             return false;
         }
 
-        if (!PasswordUtil.verifyPassword(password, user.getPassword())) {
+        if (!PasswordUtil.verifyPassword(password, PasswordUtil.hashPassword(user.getPassword()))) {
             System.out.println("Incorrect Password! Please try again.");
             return false;
         }

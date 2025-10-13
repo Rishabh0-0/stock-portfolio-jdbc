@@ -6,11 +6,10 @@ import com.portfolio.util.DbUtil;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class StockDAO {
     // add stock
-    public int addStock(Stock stock){
+    public static int addStock(Stock stock){
         String sql = "INSERT INTO stocks (symbol, company_name, current_price)" +
                 "VALUES (?, ?, ?)";
         int generatedId = -1;
@@ -42,7 +41,7 @@ public class StockDAO {
     }
 
     // get stock by id
-    public Optional<Stock> getStockById(int id){
+    public static Stock getStockById(int id){
         String sql = "SELECT * FROM stocks WHERE stock_id = ?";
 
         try (
@@ -53,7 +52,7 @@ public class StockDAO {
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    return Optional.of(getStock(rs));
+                    return getStock(rs);
                 }
             }
 
@@ -61,11 +60,11 @@ public class StockDAO {
             System.out.println("Error message: " + e.getMessage());
         }
 
-        return Optional.empty();
+        return null;
     }
 
     // get stock by symbol
-    public Optional<Stock> getStockBySymbol(String symbol){
+    public static Stock getStockBySymbol(String symbol){
         String sql = "SELECT * FROM stocks WHERE symbol = ?";
 
         try (
@@ -76,7 +75,7 @@ public class StockDAO {
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    return Optional.of(getStock(rs));
+                    return getStock(rs);
                 }
             }
 
@@ -84,11 +83,11 @@ public class StockDAO {
             System.out.println("Error message: " + e.getMessage());
         }
 
-        return Optional.empty();
+        return null;
     }
 
     // get all stock
-    public List<Stock> getAllStocks() {
+    public static List<Stock> getAllStocks() {
         List<Stock> stocks = new ArrayList<>();
 
         String sql = "SELECT * FROM stocks";
@@ -109,7 +108,7 @@ public class StockDAO {
     }
 
     // update stock price
-    public boolean updateStock(Stock stock) {
+    public static boolean updateStock(Stock stock) {
         String sql = "UPDATE Stocks SET symbol = ?, company_name = ?, current_price = ? WHERE stock_id = ?";
 
         try (
@@ -129,7 +128,7 @@ public class StockDAO {
     }
 
     // delete stock
-    public boolean deleteStock(int id) {
+    public static boolean deleteStock(int id) {
         String sql = "DELETE FROM Stocks WHERE stock_id = ?";
 
         try (Connection conn = DbUtil.getConnection();
@@ -144,7 +143,7 @@ public class StockDAO {
         }
     }
 
-    private Stock getStock(ResultSet rs) throws SQLException {
+    private static Stock getStock(ResultSet rs) throws SQLException {
         int stockId = rs.getInt("stock_id");
         String symbol = rs.getString("symbol");
         String company_name = rs.getString("company_name");

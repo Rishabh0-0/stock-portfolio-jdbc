@@ -24,7 +24,7 @@ public class HoldingDAO {
                     PreparedStatement ps1 = conn.prepareStatement(sql1);
                     PreparedStatement ps2 = conn.prepareStatement(sql2);
                     PreparedStatement ps3 = conn.prepareStatement(sql3);
-                    PreparedStatement ps4 = conn.prepareStatement(sql4);
+                    PreparedStatement ps4 = conn.prepareStatement(sql4)
             ) {
                 ps1.setInt(1, userId);
                 ps1.setInt(2, stockId);
@@ -76,7 +76,7 @@ public class HoldingDAO {
 
         try(
                 Connection conn = DbUtil.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql);
+                PreparedStatement ps = conn.prepareStatement(sql)
         ) {
             ps.setInt(1, userId);
             ps.setInt(2, stockId);
@@ -99,7 +99,7 @@ public class HoldingDAO {
 
         try(
                 Connection conn = DbUtil.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql);
+                PreparedStatement ps = conn.prepareStatement(sql)
         ) {
             ps.setInt(1, userId);
 
@@ -121,7 +121,7 @@ public class HoldingDAO {
 
         try(
                 Connection conn = DbUtil.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql);
+                PreparedStatement ps = conn.prepareStatement(sql)
         ) {
             ps.setInt(1, userId);
             ps.setInt(2, stockId);
