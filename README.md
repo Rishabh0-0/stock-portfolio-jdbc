@@ -23,7 +23,6 @@
 
 Ensure you have installed:
 
-- Java (JDK 8 or above)
-- MySQL (or a compatible variant)
-- Maven
-- (Optional) An IDE like IntelliJ or Eclipse
+- Java (JDK 8 or above)  
+- MySQL (or a compatible variant)  
+- Maven  
