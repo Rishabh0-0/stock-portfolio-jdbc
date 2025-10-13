@@ -1,11 +1,11 @@
 ## Features
 
-- Create and manage multiple user portfolios  
-- Add / remove stocks from portfolios  
-- View current holdings and their details  
-- Persist data via MySQL database  
-- JDBC-based DAO / repository layer for database interaction  
-- Simple CLI / console-based interface (or whichever UI you have)  
+- Create and manage multiple user portfolios
+- Add / remove stocks from portfolios
+- View current holdings and their details
+- Persist data via MySQL database
+- JDBC-based DAO / repository layer for database interaction
+- Simple CLI / console-based interface (or whichever UI you have)
 
 ## Tech Stack
 

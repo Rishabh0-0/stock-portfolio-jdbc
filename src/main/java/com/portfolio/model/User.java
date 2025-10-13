@@ -14,6 +14,14 @@ public class User {
     public User() {
     }
 
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.wallet_balance = 0.00;
+        this.created_at = LocalDateTime.now();
+    }
+
     public User(int user_id, String username, String email, String password, double wallet_balance, LocalDateTime created_at) {
         this.user_id = user_id;
         this.username = username;
