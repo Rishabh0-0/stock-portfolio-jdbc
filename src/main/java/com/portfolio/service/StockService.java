@@ -23,10 +23,11 @@ public class StockService {
 
     public static void updateStockPrice(String symbol, double price) {
         Stock stock = StockDAO.getStockBySymbol(symbol);
-        if (stock != null) {
-            stock.setCurrentPrice(price);
-            StockDAO.updateStock(stock);
+        if (stock == null) {
+            throw new RuntimeException("Stock with this symbol doesn't exist");
         }
+        stock.setCurrentPrice(price);
+        StockDAO.updateStock(stock);
     }
 }
 

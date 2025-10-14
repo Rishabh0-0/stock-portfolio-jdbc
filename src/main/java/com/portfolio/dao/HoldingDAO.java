@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HoldingDAO {
-    public boolean addOrUpdateHolding(int userId, int stockId, int quantity) {
+    public static boolean addOrUpdateHolding(int userId, int stockId, int quantity) {
         // check if the holding already exists
         String sql1 = "SELECT holding_id FROM holdings WHERE user_id = ? AND stock_id = ?";
         String sql2 = "UPDATE holdings SET quantity = quantity + ? WHERE holding_id = ?";
@@ -70,8 +70,7 @@ public class HoldingDAO {
 
     }
 
-
-    public Holding getHolding(int userId, int stockId) {
+    public static Holding getHolding(int userId, int stockId) {
         String sql = "SELECT * FROM holdings WHERE user_id = ? AND stock_id = ?";
 
         try(
@@ -93,7 +92,7 @@ public class HoldingDAO {
         return null;
     }
 
-    public List<Holding> getHoldingsByUser(int userId) {
+    public static List<Holding> getHoldingsByUser(int userId) {
         List<Holding> result = new ArrayList<>();
         String sql = "SELECT * FROM holdings WHERE user_id = ?";
 
@@ -116,7 +115,7 @@ public class HoldingDAO {
         return result;
     }
 
-    public boolean deleteHolding(int userId, int stockId) {
+    public static boolean deleteHolding(int userId, int stockId) {
         String sql = "DELETE FROM holdings WHERE user_id = ? AND stock_id = ?";
 
         try(
@@ -138,7 +137,7 @@ public class HoldingDAO {
     }
 
 
-    private Holding getHoldingFromResultSet(ResultSet rs) throws SQLException {
+    private static Holding getHoldingFromResultSet(ResultSet rs) throws SQLException {
         int holding_id = rs.getInt("holding_id");
         int user_id = rs.getInt("user_id");
         int stock_id = rs.getInt("stock_id");
