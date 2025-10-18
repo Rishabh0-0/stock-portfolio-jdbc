@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public class TransactionDAO {
     // add transaction
-    public int addTransaction(Transaction txn){
-        String sql = "INSERT INTO stocks (user_id, stock_id, type, quantity, price, timestamp)" +
+    public static int addTransaction(Transaction txn){
+        String sql = "INSERT INTO transactions (user_id, stock_id, type, quantity, price, timestamp)" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         int generatedId = -1;
 
@@ -26,7 +26,7 @@ public class TransactionDAO {
             ps.setString(3, txn.getType());
             ps.setInt(4, txn.getQuantity());
             ps.setDouble(5, txn.getPrice());
-            ps.setTimestamp(4, Timestamp.valueOf(txn.getTimestamp()));
+            ps.setTimestamp(6, Timestamp.valueOf(txn.getTimestamp()));
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
@@ -39,6 +39,7 @@ public class TransactionDAO {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error message: " + e.getMessage());
         }
 
@@ -46,7 +47,7 @@ public class TransactionDAO {
     }
 
     // get transaction by id
-    public Optional<Transaction> getTransactionById(int id){
+    public static Transaction getTransactionById(int id){
         String sql = "SELECT * FROM transactions WHERE transaction_id = ?";
 
         try (
@@ -57,7 +58,7 @@ public class TransactionDAO {
 
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()){
-                    return Optional.of(getTransaction(rs));
+                    return getTransaction(rs);
                 }
             }
 
@@ -65,10 +66,10 @@ public class TransactionDAO {
             System.out.println("Error message: " + e.getMessage());
         }
 
-        return Optional.empty();
+        return null;
     }
 
-    public List<Transaction> getTransactionsByUser(int userId){
+    public static List<Transaction> getTransactionsByUser(int userId){
         List<Transaction> transactions = new ArrayList<>();
 
         String sql = "SELECT * FROM transactions WHERE user_id = ?";
@@ -89,7 +90,7 @@ public class TransactionDAO {
         return transactions;
     }
 
-    public List<Transaction> getTransactionsByStock(int stock_id){
+    public static List<Transaction> getTransactionsByStock(int stock_id){
         List<Transaction> transactions = new ArrayList<>();
 
         String sql = "SELECT * FROM transactions WHERE stock_id = ?";
@@ -110,7 +111,7 @@ public class TransactionDAO {
         return transactions;
     }
 
-    public List<Transaction> getAllTransactions() {
+    public static List<Transaction> getAllTransactions() {
         List<Transaction> transactions = new ArrayList<>();
 
         String sql = "SELECT * FROM transactions";
@@ -130,8 +131,7 @@ public class TransactionDAO {
         return transactions;
     }
 
-
-    private Transaction getTransaction(ResultSet rs) throws SQLException {
+    private static Transaction getTransaction(ResultSet rs) throws SQLException {
         int transaction_id = rs.getInt("stock_id");
         int user_id = rs.getInt("symbol");
         int stock_id = rs.getInt("company_name");
