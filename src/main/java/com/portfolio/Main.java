@@ -13,10 +13,7 @@ import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
-        UserService.addFunds(8, 500);
-
-        PortfolioService.buyStock(8, "AAPL", 2);
-
+        PortfolioService.sellStock(8, "AAPL", 9);
 
     }
 }
