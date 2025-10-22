@@ -17,6 +17,18 @@ public class StockService {
 
     }
 
+    public static void getStockBySymbol(String symbol) {
+        Stock stock = StockDAO.getStockBySymbol(symbol);
+
+        if (stock == null) {
+            System.out.println("Invalid stock symbol");
+            return;
+        }
+
+        System.out.printf("%-10s %-25s %-15s%n", "SYMBOL", "COMPANY NAME", "PRICE");
+        System.out.printf("%-10s %-25s %-15.2f%n", stock.getSymbol(), stock.getCompany_name(), stock.getCurrentPrice());
+    }
+
     public static void addNewStock(Stock stock) {
         StockDAO.addStock(stock);
     }

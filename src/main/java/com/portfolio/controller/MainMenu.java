@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class MainMenu {
     private static final Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        boolean exit = false;
+        boolean isRunning = true;
 
-        while (!exit) {
+        while (isRunning) {
             System.out.println("====================================");
             System.out.println("        STOCK TRADING SYSTEM        ");
             System.out.println("====================================");
@@ -30,7 +30,7 @@ public class MainMenu {
                     register();
                     break;
                 case "3":
-                    viewPortfolio();
+                    viewAllStocks();
                     break;
                 case "4":
                     buy();
@@ -39,8 +39,8 @@ public class MainMenu {
                     sell();
                     break;
                 case "6":
-                    System.out.println("Exiting.. ");
-                    exit = true;
+                    exit();
+                    isRunning = false;
                     break;
                 default:
                     System.out.println("Invalid choice! Please select a valid option (1-6).");
@@ -61,11 +61,16 @@ public class MainMenu {
     }
 
     private static void register() {
+        System.out.print("Email: ");
+        String email = sc.nextLine();
+        System.out.print("Password: ");
+        String password = sc.nextLine();
 
+        UserController.registerUser(email, password);
     }
 
-    private static void viewPortfolio() {
-
+    private static void viewAllStocks() {
+        StockController.viewAllStock();
     }
 
     private static void buy() {
@@ -74,6 +79,10 @@ public class MainMenu {
 
     private static void sell() {
 
+    }
+
+    private static void exit() {
+        UserController.logout();
     }
 
 }

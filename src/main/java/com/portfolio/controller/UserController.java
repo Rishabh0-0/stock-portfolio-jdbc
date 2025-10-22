@@ -2,6 +2,7 @@ package com.portfolio.controller;
 
 import com.portfolio.model.User;
 import com.portfolio.service.UserService;
+import com.portfolio.util.SessionManager;
 
 import java.util.regex.Pattern;
 
@@ -41,6 +42,10 @@ public class UserController {
         }
     }
 
+    public static void logout() {
+        SessionManager.logout();
+        System.out.println("Logged out!");
+    }
 
     private static boolean isEmailValid(String email) {
         return !email.isEmpty() && EMAIL_PATTERN.matcher(email).matches();
