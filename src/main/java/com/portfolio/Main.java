@@ -1,5 +1,6 @@
 package com.portfolio;
 
+import com.portfolio.controller.MainMenu;
 import com.portfolio.dao.HoldingDAO;
 import com.portfolio.dao.StockDAO;
 import com.portfolio.dao.UserDAO;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
-        PortfolioService.sellStock(8, "AAPL", 9);
+        MainMenu.main(args);
 
     }
 }
