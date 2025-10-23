@@ -1,10 +1,13 @@
 package com.portfolio.controller;
 
+import com.portfolio.model.User;
+
 import java.util.Scanner;
 
-public class MainMenu {
+public class LoginPage {
     private static final Scanner sc = new Scanner(System.in);
-    public static void main(String[] args) {
+
+    public static void display() {
         boolean isRunning = true;
 
         while (isRunning) {
@@ -13,12 +16,9 @@ public class MainMenu {
             System.out.println("====================================");
             System.out.println("1. Login");
             System.out.println("2. Register");
-            System.out.println("3. View Portfolio");
-            System.out.println("4. Buy");
-            System.out.println("5. Sell");
-            System.out.println("6. Exit");
+            System.out.println("3. Exit");
             System.out.println("====================================");
-            System.out.print("Select an option (1-6): ");
+            System.out.print("Select an option (1-3): ");
 
             String choice = sc.nextLine();
 
@@ -30,15 +30,6 @@ public class MainMenu {
                     register();
                     break;
                 case "3":
-                    viewAllStocks();
-                    break;
-                case "4":
-                    buy();
-                    break;
-                case "5":
-                    sell();
-                    break;
-                case "6":
                     exit();
                     isRunning = false;
                     break;
@@ -67,18 +58,6 @@ public class MainMenu {
         String password = sc.nextLine();
 
         UserController.registerUser(email, password);
-    }
-
-    private static void viewAllStocks() {
-        StockController.viewAllStock();
-    }
-
-    private static void buy() {
-
-    }
-
-    private static void sell() {
-
     }
 
     private static void exit() {

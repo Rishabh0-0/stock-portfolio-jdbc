@@ -3,7 +3,7 @@ package com.portfolio.util;
 import com.portfolio.model.User;
 
 public class SessionManager {
-    private static User currentUser;
+    private static User currentUser = null;
 
     public static void login(User user) {
         currentUser = user;

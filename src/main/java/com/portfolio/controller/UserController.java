@@ -43,15 +43,14 @@ public class UserController {
     }
 
     public static void logout() {
-        SessionManager.logout();
-        System.out.println("Logged out!");
+        UserService.logout();
     }
 
-    private static boolean isEmailValid(String email) {
+    public static boolean isEmailValid(String email) {
         return !email.isEmpty() && EMAIL_PATTERN.matcher(email).matches();
     }
 
-    private static boolean isPasswordStrong(String password) {
+    public static boolean isPasswordStrong(String password) {
         return !password.isEmpty() && PASSWORD_PATTERN.matcher(password).matches();
     }
 }

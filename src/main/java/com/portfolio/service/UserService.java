@@ -29,7 +29,7 @@ public class UserService {
             return false;
         }
 
-        if (!PasswordUtil.verifyPassword(password, PasswordUtil.hashPassword(user.getPassword()))) {
+        if (!PasswordUtil.verifyPassword(password, user.getPassword())) {
             System.out.println("Incorrect Password! Please try again.");
             return false;
         }
@@ -37,6 +37,13 @@ public class UserService {
         SessionManager.login(user);
         System.out.println(user.getUsername() + "Successfully Logged In..");
         return true;
+    }
+
+    public static void logout() {
+        if (SessionManager.isLoggedIn()) {
+            SessionManager.logout();
+            System.out.println("Logout successful!");
+        }
     }
 
     public static boolean addFunds(int userId, double amount) {

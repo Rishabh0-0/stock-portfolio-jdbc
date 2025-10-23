@@ -8,8 +8,8 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private double wallet_balance;
-    private LocalDateTime created_at;
+    private double wallet_balance = 0.0;
+    private LocalDateTime created_at = LocalDateTime.now();
 
     public User() {
     }
@@ -18,8 +18,6 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.wallet_balance = 0.00;
-        this.created_at = LocalDateTime.now();
     }
 
     public User(int user_id, String username, String email, String password, double wallet_balance, LocalDateTime created_at) {

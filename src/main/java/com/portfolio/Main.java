@@ -1,20 +1,13 @@
 package com.portfolio;
 
-import com.portfolio.controller.MainMenu;
-import com.portfolio.dao.HoldingDAO;
-import com.portfolio.dao.StockDAO;
-import com.portfolio.dao.UserDAO;
-import com.portfolio.model.Stock;
-import com.portfolio.model.User;
-import com.portfolio.service.PortfolioService;
-import com.portfolio.service.StockService;
-import com.portfolio.service.UserService;
-
-import java.time.LocalDateTime;
+import com.portfolio.controller.LoginPage;
+import com.portfolio.util.PasswordUtil;
 
 public class Main {
     public static void main(String[] args) {
-        MainMenu.main(args);
+        LoginPage.display();
+
+
 
     }
 }
