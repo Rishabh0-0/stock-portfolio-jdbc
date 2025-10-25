@@ -78,6 +78,7 @@ public class TransactionDAO {
                 Connection conn = DbUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);
         ) {
+            ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()){
                 while(rs.next()){
                     transactions.add(getTransaction(rs));
@@ -99,6 +100,7 @@ public class TransactionDAO {
                 Connection conn = DbUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);
         ) {
+            ps.setInt(1, stock_id);
             try (ResultSet rs = ps.executeQuery()){
                 while(rs.next()){
                     transactions.add(getTransaction(rs));
@@ -132,14 +134,13 @@ public class TransactionDAO {
     }
 
     private static Transaction getTransaction(ResultSet rs) throws SQLException {
-        int transaction_id = rs.getInt("stock_id");
-        int user_id = rs.getInt("symbol");
-        int stock_id = rs.getInt("company_name");
-        String type = rs.getString("current_price");
+        int transaction_id = rs.getInt("transaction_id");
+        int user_id = rs.getInt("user_id");
+        int stock_id = rs.getInt("stock_id");
+        String type = rs.getString("type");
         int quantity = rs.getInt("quantity");
         double price = rs.getDouble("price");
         LocalDateTime timestamp = rs.getTimestamp("timestamp").toLocalDateTime();
-
 
         return new Transaction(transaction_id, user_id, stock_id, type, quantity, price, timestamp);
     }
