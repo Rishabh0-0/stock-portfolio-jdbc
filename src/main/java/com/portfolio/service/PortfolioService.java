@@ -10,6 +10,7 @@ import com.portfolio.model.Transaction;
 import com.portfolio.model.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PortfolioService {
     public static void buyStock(int userId, String symbol, int qty) {
@@ -82,5 +83,31 @@ public class PortfolioService {
         // Add in transactions
         Transaction tnx = new Transaction(user.getUser_id(), stock.getStock_id(), "SELL", qty, stock.getCurrentPrice(), LocalDateTime.now());
         TransactionDAO.addTransaction(tnx);
+    }
+
+    public static void viewPortfolio(int userId) {
+        List<Holding> holdings = HoldingDAO.getHoldingsByUser(userId);
+
+        if (holdings.isEmpty()) {
+            System.out.println("No stocks in your portfolio.");
+            return;
+        }
+
+        System.out.printf("%-10s %-25s %-10s %-15s %-15s%n", "SYMBOL", "COMPANY NAME", "QUANTITY", "CURRENT PRICE", "TOTAL VALUE");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        
+        double totalValue = 0.0;
+        for (Holding holding : holdings) {
+            Stock stock = StockDAO.getStockById(holding.getStock_id());
+            if (stock != null) {
+                double totalStockValue = stock.getCurrentPrice() * holding.getQuantity();
+                totalValue += totalStockValue;
+                System.out.printf("%-10s %-25s %-10d %-15.2f %-15.2f%n", 
+                    stock.getSymbol(), stock.getCompany_name(), holding.getQuantity(), 
+                    stock.getCurrentPrice(), totalStockValue);
+            }
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.printf("Total Portfolio Value: $%.2f%n", totalValue);
     }
 }
